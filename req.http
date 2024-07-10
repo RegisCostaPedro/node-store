@@ -1,0 +1,46 @@
+GET http://localhost:3000/products
+
+###
+// LISTANDO PELO SLUG
+GET http://localhost:3000/products/mouse-gamer
+
+###
+
+// LISTANDO PELO ID
+GET http://localhost:3000/products/admin/668dc8569b150d910b9bdb8c
+
+###
+
+// LISTANDO PELA TAG
+GET http://localhost:3000/products/tags/informatica
+
+###
+
+ // CADASTRA PRODUTOS
+POST http://localhost:3000/products
+Content-Type: application/json
+
+{
+  "title": "casa gamer",
+  "slug": "casa-gamer",
+  "description": "casa rgb 13 modos de luz",
+  "price": 99.99,
+  "active": true,
+  "tags": ["informatica", "casa", "game"]
+}
+
+###
+
+PUT  http://localhost:3000/products/668dc8569b150d910b9bdb8c
+Content-Type: application/json
+
+{
+   "title": "Cadeira-gamer",
+        "description": "Cadeira desconfortavel",
+    "price": 1.299,
+    "slug": "Cadeira-gamer"
+}
+###
+DELETE   http://localhost:3000/products/668dcf1601cf9c223e290328
+Content-Type: application/json
+
