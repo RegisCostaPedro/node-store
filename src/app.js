@@ -6,7 +6,10 @@ const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const app = express();
 
-const Product = require('./models/product')
+// -------- Carrega os Models ---------
+const Product = require('./models/product');
+const Custumer = require('./models/custumer');
+const Order = require('./models/order')
 
 mongoose.connect('mongodb://localhost:27017/node-store');
 
