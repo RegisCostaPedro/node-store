@@ -13,57 +13,66 @@ const productRepository = require('../repositories/productRepository')
  */
 
 // listar produtos
-exports.get = (req, res, next) => {
-    productRepository
-        .get()
-        .then(data => {
-            res.status(200).send(data);
-        }).catch(e => {
-            res.status(400).send(e);
+exports.get = async (req, res, next) => {
+    try {
+        var data = await productRepository.get();
+        res.status(200).send(data);
+    } catch (error) {
+        res.status(500).send({
+            message: 'Falha ao processar sua requisição'
         });
+    }
+
+
 }
 
 // listar produtos pelo slug
-exports.getBySlug = (req, res, next) => {
-    productRepository.getBySlug(req.params.slug)
-        .then(data => {
-            res.status(200).send(data);
-
-        }).catch(e => {
-            res.status(400).send(e);
+exports.getBySlug = async (req, res, next) => {
+    try {
+        var data = await productRepository.getBySlug(req.params.slug);
+        res.status(200).send(data);
+    } catch (error) {
+        res.status(400).send({
+            message: 'Falha ao processar sua requisição'
         });
+    }
+
 }
 
 // listar produtos pelo id
-exports.getById = (req, res, next) => {
-    productRepository.getById(req.params.id)
-        .then(data => {
-            res.status(200).send(data);
-
-        }).catch(e => {
-            res.status(400).send(e);
+exports.getById = async (req, res, next) => {
+    try {
+        var data = await productRepository.getById(req.params.id)
+        res.status(200).send(data);
+    } catch (error) {
+        res.status(400).send({
+            message: 'Falha ao processar sua requisição'
         });
+    }
+
+
 }
 
 // listar produtos pela tag
-exports.getByTag = (req, res, next) => {
-    productRepository.getByTag(req.params.tags)
-        .then(data => {
-            res.status(200).send(data);
-
-        }).catch(e => {
-            res.status(400).send(e);
+exports.getByTag = async (req, res, next) => {
+    try {
+        const data = await productRepository.getByTag(req.params.tags)
+        res.status(200).send(data);
+    } catch (error) {
+        res.status(400).send({
+            message: 'Falha ao processar sua requisição'
         });
+    }
 }
 
 
 
 // Cadastrar produto
-exports.post = (req, res, next) => {
+exports.post = async (req, res, next) => {
     let contract = new ValidationContract();
-    contract.hasMinLen(req.body.title, 3, 'O titulo deve ter pelo menos 3 caracteres');
-    contract.hasMinLen(req.body.slug, 3, 'O titulo deve ter pelo menos 3 caracteres');
-    contract.hasMinLen(req.body.description, 3, 'O titulo deve ter pelo menos 3 caracteres');
+    contract.hasMinLen(req.body.title, 3, 'O título deve conter pelo menos 3 caracteres');
+    contract.hasMinLen(req.body.slug, 3, 'O título deve conter pelo menos 3 caracteres');
+    contract.hasMinLen(req.body.description, 3, 'O título deve conter pelo menos 3 caracteres');
 
     // Se os dados forem inválidos
     if (!contract.isValid()) {
@@ -71,44 +80,52 @@ exports.post = (req, res, next) => {
         return;
     }
 
-    productRepository
-        .create(req.body).then(x => {
-            res.status(201).send({
-                message: 'Produto cadastrado com sucesso!'
-            });
-
-        }).catch(e => {
+    try {
+        // Verificar se o slug já existe
+        const existingProduct = await Product.findOne({ slug: req.body.slug });
+        if (existingProduct) {
             res.status(400).send({
-                message: 'Falha ao cadastrar produto!', data: e
+                message: 'Slug já existe, por favor use um slug diferente.'
             });
-        });
+            return;
+        }
 
-}
-
-exports.put = (req, res, next) => {
-    productRepository.update(req.params.id, req.body)
-        .then(() => {
-            res.status(201).send({
-                message: 'Produto atualizado com sucesso!'
-            });
-        }).catch(e => {
-            res.status(400).send({
-                message: 'Falha ao atualizar produto',
-                data: e
-            });
+        await productRepository.create(req.body);
+        res.status(201).send({
+            message: 'Produto cadastrado com sucesso!'
         });
+    } catch (e) {
+        res.status(500).send({
+            message: 'Falha ao processar sua requisição'
+        });
+        console.log(e);
+    }
+};
+
+exports.put = async (req, res, next) => {
+    try {
+        await productRepository.update(req.params.id, req.body);
+        res.status(201).send({
+            message: 'Produto atualizado com sucesso!'
+        });
+    } catch (error) {
+        res.status(500).send({
+            message: 'Falha ao processar sua requisição'
+        });
+    }
+
 }
 // DELETA
-exports.delete = (req, res, next) => {
-    productRepository.delete(req.params.id)
-        .then(() => {
-            res.status(200).send({
-                message: 'Produto deletado com sucesso!'
-            });
-        }).catch(e => {
-            res.status(400).send({
-                message: 'Falha ao deletar produto',
-                data: e
-            });
+exports.delete = async (req, res, next) => {
+    try {
+        await productRepository.delete(req.params.id);
+        res.status(200).send({
+            message: 'Produto deletado com sucesso!'
         });
+    } catch (error) {
+        res.status(400).send({
+            message: 'Falha ao processar sua requisição'
+        });
+    }
+
 }

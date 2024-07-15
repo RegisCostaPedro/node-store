@@ -2,12 +2,12 @@ GET http://localhost:3000/products
 
 ###
 // LISTANDO PELO SLUG
-GET http://localhost:3000/products/fone-gamer
+GET http://localhost:3000/products/cadeira-gamer
 
 ###
 
 // LISTANDO PELO ID
-GET http://localhost:3000/products/admin/668f1b640bc5b699927a0ab4
+GET http://localhost:3000/products/admin/6695a2ab6bb48d6e8c2dfddc
 
 ###
 
@@ -21,26 +21,29 @@ POST http://localhost:3000/products
 Content-Type: application/json
 
 {
-  "title": "mesa gamer",
-  "slug": "mesa-gamer",
-  "description": "mesa rgb 13 modos de luz",
-  "price": 99.99,
+  "title": "rato gamer",
+  "slug": "rato-gamer",
+  "description": "rato colorido gamer",
+  "price": 19.99,
   "active": true,
-  "tags": ["informatica", "mesa", "game"]
+
+  "tags": ["informatica", "rato", "game"]
 }
+
+
 
 ###
 
-PUT  http://localhost:3000/products/668dc8569b150d910b9bdb8c
+PUT  http://localhost:3000/products/668f314122990c0eab90dad7
 Content-Type: application/json
 
 {
-   "title": "Cadeira-gamer v2",
-        "description": "Cadeira desconfortavel",
-    "price": 1.299,
-    "slug": "Cadeira-gamer"
+   "title": "mesa-gamer v2",
+        "description": "mesa rgb 19 modos de luz",
+    "price": 100,
+    "slug": "mesa-gamer"
 }
 ###
-DELETE   http://localhost:3000/products/668f1b640bc5b699927a0ab4
+DELETE   http://localhost:3000/products/6695a3385aefab987494edf0
 Content-Type: application/json
 
