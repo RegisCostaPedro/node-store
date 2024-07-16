@@ -1,0 +1,11 @@
+ // CADASTRA Cliente
+POST http://localhost:3000/custumers
+Content-Type: application/json
+
+{
+  "name": " mateus costa",
+  "email": "mateus@email.com",
+  "password": "mateus"
+}
+###
+GET  http://localhost:3000/custumers
