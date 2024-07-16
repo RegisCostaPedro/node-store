@@ -5,7 +5,7 @@ const { default: mongoose } = require("mongoose");
 const Custumer = mongoose.model('Custumer');
 const ValidationContract = require('../validators/fluent-validator');
 const custumerRepository = require('../repositories/custumer-repository');
-
+const authService = require('../services/auth-service');
 const md5 = require('md5');
 const bcrypt = require('bcrypt');
 
@@ -57,6 +57,49 @@ exports.post = async (req, res, next) => {
         });
     } catch (error) {
         console.error('Erro ao cadastrar cliente:', error);
+        res.status(500).send({
+            message: 'Falha ao processar sua requisição'
+        });
+    }
+};
+
+// AUTENTICAR CLIENTE
+exports.authenticate = async (req, res, next) => {
+  
+    // const userPassword = req.body.password; 
+    // bcrypt.hash(userPassword,  global.SALT_KEY)
+    try {
+        const hashedPassword = await bcrypt.hashSync(req.body.password, 10);
+
+    console.log(req.body.email);
+    console.log(hashedPassword);
+
+      const custumer = await  custumerRepository.authenticate({
+            email: req.body.email,
+            password: req.body.password 
+        });
+ console.log(custumer);
+         if(!custumer){
+             res.status(404).send({
+               message:'Usuário ou senha inválidos'
+               });
+               return;
+         }
+
+     const token = await authService.generateToken({
+            email: custumer.email,
+             name: custumer.name
+        })
+
+        res.status(201).send({
+          token:token,
+          data:{
+            email: custumer.email,
+             name: custumer.name
+          }
+        });
+    } catch (error) {
+        console.error('Erro ao autenticar cliente:', error);
         res.status(500).send({
             message: 'Falha ao processar sua requisição'
         });
