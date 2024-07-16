@@ -1,0 +1,24 @@
+GET  http://localhost:3000/orders
+###
+ // CADASTRA pedido
+POST http://localhost:3000/orders
+Content-Type: application/json
+
+{
+  "custumer": "6695bdfd22472ac1217c5eda", 
+
+  "items": [
+    {
+      "quantity": 2,
+      "price": 50.00,
+      "product": "6695a2ab6bb48d6e8c2dfddc" 
+    },
+    {
+      "quantity": 1,
+      "price": 30.00,
+      "product": "6695b951e137110ac934f9e3" 
+    }
+  ]
+}
+
+

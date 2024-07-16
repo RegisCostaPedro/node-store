@@ -21,13 +21,13 @@ POST http://localhost:3000/products
 Content-Type: application/json
 
 {
-  "title": "rato gamer",
-  "slug": "rato-gamer",
-  "description": "rato colorido gamer",
+  "title": "cachorro gamer",
+  "slug": "cachorro-gamer",
+  "description": "cachorro colorido gamer",
   "price": 19.99,
   "active": true,
 
-  "tags": ["informatica", "rato", "game"]
+  "tags": ["informatica", "cachorro", "game"]
 }
 
 

@@ -81,15 +81,7 @@ exports.post = async (req, res, next) => {
     }
 
     try {
-        // Verificar se o slug já existe
-        const existingProduct = await Product.findOne({ slug: req.body.slug });
-        if (existingProduct) {
-            res.status(400).send({
-                message: 'Slug já existe, por favor use um slug diferente.'
-            });
-            return;
-        }
-
+   
         await productRepository.create(req.body);
         res.status(201).send({
             message: 'Produto cadastrado com sucesso!'
