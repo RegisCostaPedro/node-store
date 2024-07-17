@@ -2,6 +2,8 @@
 const { default: mongoose } = require("mongoose");
 const Custumer = mongoose.model('Custumer');
 const bcrypt = require('bcrypt');
+
+
 exports.get = async() => {
         const res = await Custumer.find({
         

@@ -17,13 +17,14 @@ const route = router.get('/',(req,res,next)=>{
     });
 });
 
+
 app.use('/',route);
+
 server.listen(PORT,()=>{
     console.log('Server rodando na porta ' + PORT);
 });
 server.on('error', onError);
 server.on('listening', onListening)
-
 
 function normalizePort(val){
     const port  = parseInt(val,10);
