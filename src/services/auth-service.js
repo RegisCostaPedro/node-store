@@ -10,6 +10,7 @@ exports.decodeToken = async (token) => {
     return data;
 }
 
+// VERIFICA SE ESTÁ AUTORIZADO
 exports.authorize = function (req, res, next) {
     var token = req.body.token || req.query.token || req.headers['x-access-token'];
 
@@ -30,6 +31,7 @@ exports.authorize = function (req, res, next) {
     }
 };
 
+// VERIFICA SE É ADMIN
 exports.isAdmin = function (req, res, next) {
     var token = req.body.token || req.query.token || req.headers['x-access-token'];
 

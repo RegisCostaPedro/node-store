@@ -31,3 +31,9 @@ exports.authenticate = async (data) => {
 
     return custumer;
 };
+
+exports.getById = async (id) => {
+    const res = await Custumer.findById(id);
+  
+    return res;
+};
